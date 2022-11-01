@@ -1,20 +1,29 @@
+// const h1 = document.querySelector('h1');
 
-// setTimeout(function (number=10){
-//     let sum = 0;
-// for (let i = 0; i <= number; i++) {
-//     sum += i;  
+// const id = setInterval(tick, 1000);
+// let counter = 0;
+
+// function tick() {
+//     h1.textContent = ++counter;
 // }
-// console.log(sum);
-// }, 5000)
 
-function sum (){
-    let summary = 0;
-    for (let i = 0; i < 10000; i++) {
-        summary += i;  
-    }
-    console.log(summary);
-    console.timeEnd(1);
+// const btn = document.querySelector('button');
+
+// btn.addEventListener('click', function(){
+//     clearInterval(id);
+// })
+
+const h1 = document.querySelector('h1');
+
+const id = setTimeout(tick, 1000);
+let counter = 0;
+
+function tick() {
+    h1.textContent = ++counter;
+    id = setTimeout(tick, 1000)
 }
 
-console.time(1);
-setTimeout(sum, 3000);
+const btn = document.querySelector('button');
+btn.addEventListener('click', function(){
+    clearTimeout(id);
+})
