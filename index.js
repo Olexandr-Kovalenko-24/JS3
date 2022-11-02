@@ -2,8 +2,12 @@ const resultOfRequest = fetch('http://');
 console.log(resultOfRequest);
 
 resultOfRequest
-.then(()=>{
+.then((response)=>{
     console.log('promise ok')
-}).catch((reject)=>{
+    return response.json();
+}).then((successData)=>{
+    console.log(successData);
+})
+.catch((reject)=>{
     console.log(reject);
 })
