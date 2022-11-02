@@ -1,0 +1,13 @@
+.username {
+    font-weight: 900;
+}
+
+.card-wrapper {
+    width: 250px;
+    height: 200px;
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
