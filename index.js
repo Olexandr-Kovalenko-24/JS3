@@ -1,4 +1,4 @@
-const resultOfRequest = fetch('http://');
+const resultOfRequest = fetch('./data.json');
 console.log(resultOfRequest);
 
 resultOfRequest
