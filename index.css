@@ -1,4 +1,11 @@
-.username {
+#root {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.name {
     font-weight: 900;
 }
 
@@ -10,4 +17,6 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    border: 2px solid rgba(0, 0, 0, 0.459);
+    margin: 10px;
 }
