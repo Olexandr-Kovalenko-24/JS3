@@ -14,7 +14,7 @@ resultOfRequest
 
 
 function createUserCard(user){
-    const h2 = createElement('h2', {classNames: ['username']}, user.firstName, user.lastName);
+    const h2 = createElement('h2', {classNames: ['username']}, `${user.firstName} ${user.lastName}`);
     const p = createElement('p', {}, user.telNum);
     const div = createElement('div', {classNames: ['card-wrapper']}, h2,p);
     return div;
