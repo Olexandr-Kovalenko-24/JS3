@@ -1,18 +1,20 @@
-const resultOfRequest = fetch('https://dummyjson.com/products');
+const API_BASE = 'https://dummyjson.com/products'
+const root = document.querySelector('#root');
+const spinner = document.createElement('div');
+spinner.classList.add('loader');
+root.append(spinner);
 
-resultOfRequest
+fetch(API_BASE)
     .then((res) => res.json())
     .then(({ products }) => {
-        const root = document.querySelector('#root');
         const productCardArray = products.map(createProductCard);
         root.append(...productCardArray);
     })
     .catch((rej) => {
-        console.log(rej);
+        root.append('Some error happend :(');
     })
     .finally(() => {
-        const loader = document.querySelector('.loader');
-        loader.classList.remove('loader');
+        spinner.remove();
     })
 
 function createProductCard(product) {
@@ -20,7 +22,7 @@ function createProductCard(product) {
     const p = createElement('p', {}, product.description);
     const image = createImageWrapper(product);
     const price = createElement('p', {}, `${product.price} UAH`);
-    const div = createElement('div', { classNames: ['card-wrapper'] }, h2, p, price, image);
+    const div = createElement('div', { classNames: ['card-wrapper'] }, h2, image, price, p);
     return div;
 }
 
