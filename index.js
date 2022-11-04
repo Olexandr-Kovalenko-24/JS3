@@ -59,3 +59,18 @@ function imageLoadHandler({ target }) {
 function imageErrorHandler(event) {
     event.target.remove();
 }
+
+
+async function loadImage(){
+    try {
+    const response = await fetch('');
+    const result = await response.json();
+    console.log(result);
+    } catch(error){
+        console.log(error.message);
+    }
+    console.log('Another code')
+}
+
+const result = loadImage();
+console.log('sync code')
