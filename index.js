@@ -1,31 +1,43 @@
-const API_BASE = 'https://dummyjson.com/products'
-const root = document.querySelector('#root');
-const spinner = document.createElement('div');
-spinner.classList.add('loader');
-root.append(spinner);
+const form = document.querySelector('form');
 
-fetch(API_BASE)
-    .then((res) => res.json())
-    .then(({ products }) => {
-        const productCardArray = products.map(createProductCard);
-        root.append(...productCardArray);
-    })
-    .catch((rej) => {
-        root.append('Some error happend :(');
-    })
-    .finally(() => {
-        spinner.remove();
-    })
+const API_BASE = 'https://api.openweathermap.org/data/2.5/weather';
 
-function createProductCard(product) {
-    const h2 = createElement('h2', { classNames: ['name'] }, product.title);
-    const p = createElement('p', {}, product.description);
-    const image = createImageWrapper(product);
-    const price = createElement('p', {}, `${product.price} UAH`);
-    const div = createElement('div', { classNames: ['card-wrapper'] }, h2, image, price, p);
-    return div;
+const API_KEY = 'f7c576ba3699bdd0b98ddcf196639992';
+
+form.addEventListener('submit', submitHandler);
+
+function submitHandler(event) {
+    event.preventDefault();
+    const city = event.target.city.value;
+    const url = `${API_BASE}?q=${city}&appid=${API_KEY}&units=metric&lang=ua`;
+    fetch(url)
+        .then((response) => {
+            return response.json();
+        })
+        .then((wetherData) => {
+            clearWidget();
+            const card = createWidget(wetherData);
+            const root = document.querySelector('#root');
+            root.append(card);
+        })
 }
 
+function clearWidget() {
+    const section = document.querySelector('.weather');
+    if (section) {
+        section.remove();
+    }
+    return true;
+}
+
+function createWidget(weatherObj) {
+    const cityName = createElement('h1', {}, 'Місто: ', getTranslate(weatherObj.name));
+    const desription = createElement('h2', {}, 'Хмарність: ', weatherObj.weather[0].description);
+    const temp = createElement('p', {}, 'Температура повітря: ', weatherObj.main.temp);
+    const wind = createElement('p', {}, 'Швидкість вітру: ', weatherObj.wind.speed);
+    const widgetCard = createElement('section', { classNames: ['weather'] }, cityName, desription, temp, wind);
+    return widgetCard;
+}
 
 function createElement(type, { classNames = [] }, ...children) {
     const elem = document.createElement(type);
@@ -34,43 +46,13 @@ function createElement(type, { classNames = [] }, ...children) {
     return elem;
 }
 
-function createImageWrapper(product) {
-    const imageWrapper = createElement('div', { classNames: ['image-wrapper'] }, product.title[0])
-    imageWrapper.setAttribute('id', `wrapper-${product.id}`);
-    const avatar = createImage(product);
-    return imageWrapper;
-}
-
-function createImage(product) {
-    const avatar = document.createElement('img');
-    avatar.setAttribute('src', product.images[1]);
-    avatar.dataset.id = product.id;
-    avatar.addEventListener('load', imageLoadHandler);
-    avatar.addEventListener('error', imageErrorHandler);
-    avatar.classList.add('photo');
-    return avatar;
-}
-
-function imageLoadHandler({ target }) {
-    const parentWrapper = document.querySelector((`#wrapper-${target.dataset.id}`));
-    parentWrapper.append(target);
-}
-
-function imageErrorHandler(event) {
-    event.target.remove();
-}
-
-
-async function loadImage(){
-    try {
-    const response = await fetch('');
-    const result = await response.json();
-    console.log(result);
-    } catch(error){
-        console.log(error.message);
+function getTranslate(city) {
+    const cityName = {
+        'Kyiv': 'Київ',
+        'Dnipro': 'Дніпро',
+        'Kharkiv': 'Харків',
+        'Zaporizhzhia': 'Запоріжжя',
+        'Lviv': 'Львів',
     }
-    console.log('Another code')
+    return cityName[city];
 }
-
-const result = loadImage();
-console.log('sync code')
