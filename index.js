@@ -2,7 +2,7 @@ const form = document.querySelector('form');
 
 const API_BASE = 'https://api.openweathermap.org/data/2.5/weather';
 
-const API_KEY = 'f7c576ba3699bdd0b98ddcf196639992';
+const API_KEY = '474a73c5782c46a96eef17232c65eeb1';
 
 form.addEventListener('submit', submitHandler);
 
@@ -14,9 +14,9 @@ function submitHandler(event) {
         .then((response) => {
             return response.json();
         })
-        .then((wetherData) => {
+        .then((weatherData) => {
             clearWidget();
-            const card = createWidget(wetherData);
+            const card = createWidget(weatherData);
             const root = document.querySelector('#root');
             root.append(card);
         })
@@ -31,11 +31,12 @@ function clearWidget() {
 }
 
 function createWidget(weatherObj) {
-    const cityName = createElement('h1', {}, 'Місто: ', getTranslate(weatherObj.name));
-    const desription = createElement('h2', {}, 'Хмарність: ', weatherObj.weather[0].description);
-    const temp = createElement('p', {}, 'Температура повітря: ', weatherObj.main.temp);
-    const wind = createElement('p', {}, 'Швидкість вітру: ', weatherObj.wind.speed);
-    const widgetCard = createElement('section', { classNames: ['weather'] }, cityName, desription, temp, wind);
+    const cityName = createElement('h2', {}, 'Місто: ', getTranslate(weatherObj.name));
+    const desription = createElement('p', {}, 'Хмарність: ', weatherObj.weather[0].description);
+    const temp = createElement('p', {}, 'Температура повітря: ', weatherObj.main.temp,  ' \u00B0C');
+    const wind = createElement('p', {}, 'Швидкість вітру: ', weatherObj.wind.speed, ' м/с');
+    const humidity = createElement('p', {}, 'Вологість: ', weatherObj.main.humidity, ' %');
+    const widgetCard = createElement('section', { classNames: ['weather'] }, cityName, desription, temp, humidity, wind);
     return widgetCard;
 }
 
@@ -53,6 +54,7 @@ function getTranslate(city) {
         'Kharkiv': 'Харків',
         'Zaporizhzhia': 'Запоріжжя',
         'Lviv': 'Львів',
+        'Vinnytsia': 'Вінниця',
     }
     return cityName[city];
 }

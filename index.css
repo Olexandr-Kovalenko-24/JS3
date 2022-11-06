@@ -1,15 +1,39 @@
+body {
+    margin: 0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-image: url('./images/1665300476_9-1.png');
+    background-size: cover;
+}
+
 .weather-widget {
-    width: 300px;
+    text-align: center;
+    width: 280px;
     padding: 20px;
     border-radius: 10px;
-    background-color: blanchedalmond;
-    border: 2px solid salmon;
+    background-color: lightskyblue;
+    border: 3px solid darkcyan;
 }
 
 .weather {
-    width: 300px;
+    text-align: center;
+    width: 280px;
     padding: 20px;
-    background-color: bisque;
-    border: 2px solid violet;
+    background-color: paleturquoise;
+    border: 5px solid turquoise;
     border-radius: 10px;
+    font-size: 18px;
+}
+
+.widget-part {
+    background-color: white;
+    font-size: 16px;
+    border: 2px solid darkcyan;
+    padding: 4px;
 }
